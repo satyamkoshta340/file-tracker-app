@@ -7,6 +7,7 @@ import AvatarButton from '../components/AvatarButton';
 import Home from './Home';
 import Account from './Account';
 import File from './File';
+import RecentFiles from './RecentFiles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ExistingFiles from './ExistingFiles';
 import { Provider as PaperProvider } from 'react-native-paper';
@@ -50,6 +51,7 @@ const MainStack = () => {
             <Stack.Screen name="Account" component={Account}/>
             <Stack.Screen name="ExistingFiles" component={ExistingFiles} />
             <Stack.Screen name="File" component={File}/>
+            <Stack.Screen name="RecentFiles" component={RecentFiles}/>
           </Stack.Navigator>
         }
     </View>

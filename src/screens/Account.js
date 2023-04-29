@@ -35,7 +35,7 @@ const Account = ({navigation}) => {
             </View>
         </View>
 
-        <Pressable style={ styles.cardRow }>
+        <Pressable style={ styles.cardRow } onPress={() => navigation.navigate("RecentFiles")}>
             <Entypo name="folder" size={24} color="#DBC743" />
             <Text style={{marginLeft: 5}}>All Recent Files</Text>
         </Pressable>
