@@ -2,12 +2,14 @@ import { StyleSheet, View, Pressable, Image } from 'react-native'
 import React, { useState, useContext } from 'react'
 import AuthContext from '../store/authContext';
 import { Modal, Portal, Button, Text } from 'react-native-paper';
-
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
+import { Zocial } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 
 const Account = ({navigation}) => {
     const [modalVisibility, setModalVisibility] = useState(false);
     const authCtx = useContext(AuthContext);
-    console.log(authCtx)
 
     return (
     <View style={styles.wrapper}>
@@ -26,27 +28,24 @@ const Account = ({navigation}) => {
         </View>
         <View style={styles.userBox}>
             <Text style={{ color: "white", fontSize: 24, fontWeight: 700 }}> { authCtx?.firstName + " " + authCtx?.lastName} </Text>
-            <Text style={{ color: "white", paddingLeft:2, fontSize: 16, paddingTop: 4 }}> { authCtx.email} </Text>
+            <View style={{flexDirection:'row'}}>
+
+                <MaterialIcons name="email" size={20} color="white" style={{ paddingTop:6 }}/> 
+                <Text style={{ color: "white", paddingLeft:2, fontSize: 16, paddingTop: 4}}>{authCtx.email} </Text>
+            </View>
         </View>
 
-        <View style={ styles.cardRow }>
-            <View>
-                <Text>
-                    My Files
-                </Text>
-            </View>
-            <View>
-                <Text>
-                    My Files
-                </Text>
-            </View>
-        </View>
+        <Pressable style={ styles.cardRow }>
+            <Entypo name="folder" size={24} color="#DBC743" />
+            <Text style={{marginLeft: 5}}>All Recent Files</Text>
+        </Pressable>
+
         <Pressable onPress={() => { setModalVisibility(true)
         }} style={ styles.cardRow }>
-            <Text>
-                Log out
-            </Text>
+            <MaterialCommunityIcons name="logout" size={24} color="black" />
+            <Text style={{marginLeft: 5}}>Log out</Text>
         </Pressable>
+
         <Portal>
             <Modal visible={modalVisibility} onDismiss={() => setModalVisibility(false)} contentContainerStyle={styles.modal}>
                 <Text variant='titleMedium' > Are you sure, wanna logout?</Text>
@@ -90,7 +89,6 @@ const styles = StyleSheet.create({
         padding: 20,
         borderRadius: 10,
         backgroundColor: 'white',
-        justifyContent: 'space-between',
         alignItems: 'center'
     },
     userBox:{

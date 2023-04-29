@@ -4,6 +4,7 @@ import axios from 'axios'
 import AuthContext from '../store/authContext'
 import { REACT_APP_URL } from "@env"
 import { ActivityIndicator, Modal, Text, List, Card, Button } from "react-native-paper";
+import { FontAwesome } from '@expo/vector-icons';
 
 const ExistingFiles = ({navigation}) => {
     const authCtx = useContext(AuthContext)
@@ -73,7 +74,7 @@ const ExistingFiles = ({navigation}) => {
                     setFile(item)
                     Vibration.vibrate(50);
                     setModalVisibility(true)}}>
-                        <Text variant="titleMedium" ellipsizeMode='tail' numberOfLines={1}>{item?.fileName}</Text>
+                        <Text variant="titleMedium" ellipsizeMode='tail' > <FontAwesome name="file" size={16} color="#BFAB25" /> {item?.fileName}</Text>
                         <Text ellipsizeMode='tail' numberOfLines={2}>{item.description}</Text>
                     </Card>)
             }
