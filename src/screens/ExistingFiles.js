@@ -27,13 +27,13 @@ const ExistingFiles = ({navigation}) => {
                 // console.log(resp.data.data);
                 setFiles(resp.data.data.files)
                 setIsLoading(false)
-                console.log("files", files)
+                // console.log("files", files)
             })
     }
     const deleteFile = async (fileId) => {
         setIsDeleting(true);
         try{
-            const resp = await axios.delete( `${REACT_APP_URL}/api/history/${fileId}`, {
+            const resp = await axios.delete( `${REACT_APP_URL}/api/file/history/${fileId}`, {
                 headers: {
                 Authorization: `Bearer ${authCtx.token}`,
             },});
@@ -74,7 +74,7 @@ const ExistingFiles = ({navigation}) => {
                     Vibration.vibrate(50);
                     setModalVisibility(true)}}>
                         <Text variant="titleMedium" ellipsizeMode='tail' numberOfLines={1}>{item?.fileName}</Text>
-                        <Text ellipsizeMode='tail' numberOfLines={3}>{item.description}</Text>
+                        <Text ellipsizeMode='tail' numberOfLines={2}>{item.description}</Text>
                     </Card>)
             }
             { files?.length%3 ? <View style={{ flexGrow: 0.75}}></View> : '' }
@@ -112,8 +112,8 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     file: {
-        width: '30%',
-        height: 100,
+        width: '100%',
+        height: 70,
         marginBottom: 10,
         borderRadius: 10,
         padding: 5,
