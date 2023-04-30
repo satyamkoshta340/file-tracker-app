@@ -6,7 +6,7 @@ import axios from 'axios';
 import { Dropdown } from 'react-native-element-dropdown';
 import AuthContext from '../store/authContext';
 
-const SendOutFileButton = ({ setSnackbarVisibility, setSnackbarText }) => {
+const SendOutFileButton = ({ setSnackbarVisibility, setSnackbarText, navigation }) => {
     const authCtx = useContext(AuthContext);
     const [modelVisibility, setModelVisibility] = useState(false);
     const [file, setFile] = useState(null);
@@ -14,21 +14,13 @@ const SendOutFileButton = ({ setSnackbarVisibility, setSnackbarText }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [myFiles, setMyFiles] = useState(null);
     const [allUsers, setAllUsers] = useState(null);
+    const [isSending, setIsSending] = useState(false);
 
-    const data = [
-        { label: 'Item 1', value: '1' },
-        { label: 'Item 2', value: '2' },
-        { label: 'Item 3', value: '3' },
-        { label: 'Item 4', value: '4' },
-        { label: 'Item 5', value: '5' },
-        { label: 'Item 6', value: '6' },
-        { label: 'Item 7', value: '7' },
-        { label: 'Item 8', value: '8' },
-    ];
     const fetchMyFiles = async () => {
         setIsLoading(true)
+        console.log("here")
         try{
-            const resp = await axios.get(`${REACT_APP_URL}/api/user/getAllFiles`, {
+            const resp = await axios.get(`${REACT_APP_URL}/api/user/getAllRecentFiles`, {
                 method: 'GET',
                 headers:{
                     'content-type': 'application/json',
@@ -38,8 +30,8 @@ const SendOutFileButton = ({ setSnackbarVisibility, setSnackbarText }) => {
                 const response = resp.data;
 
                 if( response.status === "success" ){
-                    console.log(response.data)
-                    setMyFiles(response.data)
+                    // console.log(response.data)
+                    setMyFiles(response.data.recentFiles)
                 }
         }catch(err){
             console.log(err)
@@ -72,6 +64,39 @@ const SendOutFileButton = ({ setSnackbarVisibility, setSnackbarText }) => {
         setIsLoading(false)
     }
 
+    const sendOutFile = async () => {
+        setIsSending(true);
+        if ( file === null || recipient === null ){
+            setSnackbarVisibility(true)
+            setSnackbarText("Please select file, recipient properly!")
+            return
+        }
+        try{
+            const body ={
+                info: `File sent to ${recipient.firstName + " " + recipient.lastName} from ${authCtx.firstName + " " + authCtx.lastName}.`,
+                type: 'send'
+            }
+            console.log(file)
+            const resp = await axios.post(`${REACT_APP_URL}/api/file/history/${file._id}`, body, {
+                method: 'POST',
+                headers:{
+                    'content-type': 'application/json',
+                    'Authorization': `Bearer ${authCtx.token}`
+                }});
+            const response = await resp.data;
+            if(response.status === "success"){
+                setModelVisibility(false)
+                console.log(response.data);
+                navigation.navigate("File", {fileId: file._id});
+            }
+        }
+        catch( err ){
+            console.log(err);
+            setSnackbarVisibility(true)
+            setSnackbarText("Error in Sending file!")
+        }
+        setIsSending(false);
+    }
     // useEffect( () =>{
     //     fetchAllUsers();
     //     fetchMyFiles();
@@ -98,13 +123,13 @@ const SendOutFileButton = ({ setSnackbarVisibility, setSnackbarText }) => {
                                 data={myFiles? myFiles : []}
                                 search
                                 maxHeight={300}
-                                labelField="label"
-                                valueField="value"
+                                labelField="fileName"
+                                valueField="fileId"
                                 placeholder="Select File"
                                 searchPlaceholder="Search"
                                 style={styles.dropdown}
                                 value={file}
-                                onChange={item => setFile(item.value)}
+                                onChange={item => setFile(item)}
                             />
                             <Dropdown
                                 data={allUsers ? allUsers : []}
@@ -116,9 +141,9 @@ const SendOutFileButton = ({ setSnackbarVisibility, setSnackbarText }) => {
                                 searchPlaceholder="Search"
                                 style={styles.dropdown}
                                 value={recipient}
-                                onChange={item => setRecipient(item.value)}
+                                onChange={item => setRecipient(item)}
                             />
-                            <Button mode="contained" style={{}}>Send File</Button>
+                            <Button mode="contained" style={{}} onPress={() => sendOutFile()} loading={isSending}>Send File</Button>
                         </View>
                     </Modal>
                 </Portal>

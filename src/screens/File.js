@@ -84,8 +84,8 @@ const File = ({route, navigation}) => {
                 </View>
             </View>
             <View style={{justifyContent: "space-between", flexDirection: "row", marginBottom: 10}}>
-                <Button mode='contained' onPress={()=> print()} style={{width: "45%"}}>Print QR <FontAwesome name="print" size={18} color="white" /></Button>
-                <Button mode='contained' onPress={()=> printAndShareFile()} style={{width: "45%"}}>Share QR <Entypo name="share" size={18} color="white" /></Button>
+                <Button mode='contained' onPress={()=> print()} style={{width: "45%"}}> Print QR <FontAwesome name="print" size={18} color="white" /></Button>
+                <Button mode='contained' onPress={()=> printAndShareFile()} style={{width: "45%"}}> Share QR <Entypo name="share" size={18} color="white" /></Button>
             </View>
             <FlatList
                 data={history}

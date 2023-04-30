@@ -43,7 +43,8 @@ const TakeInFileButton = ({navigation, setSnackbarVisibility, setSnackbarText}) 
     const takeFileIn = async (fileId)=>{
         setIsLoading(true)
         const body  ={
-            info:  `File recieved by ${authCtx.firstName} ${authCtx.lastName}.`
+            info:  `File recieved by ${authCtx.firstName} ${authCtx.lastName}.`,
+            type: "recieve"
         }
         console.log(body)
         const resp = await axios.post(`${REACT_APP_URL}/api/file/history/${fileId}`, body, {

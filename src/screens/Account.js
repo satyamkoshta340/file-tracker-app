@@ -22,9 +22,12 @@ const Account = ({navigation}) => {
             </Text>
         </View> */}
         <View style={{alignItems: "center"}}>
-            <Image source={{
-            uri: authCtx?.profile,
-            }}  style={{width: 120, height: 120, borderRadius: 10}}/>
+            {
+                authCtx?.profile ? 
+                <Image source={{ uri: authCtx.profile,}}  style={{width: 120, height: 120, borderRadius: 10, borderColor: "#ffffff", borderWidth: 4}}/> :
+                <Image source={require("../../assets/avatar.png")}  style={{width: 120, height: 120, borderRadius: 10, borderColor: "#ffffff", borderWidth: 4}}/>
+            }
+            
         </View>
         <View style={styles.userBox}>
             <Text style={{ color: "white", fontSize: 24, fontWeight: 700 }}> { authCtx?.firstName + " " + authCtx?.lastName} </Text>
