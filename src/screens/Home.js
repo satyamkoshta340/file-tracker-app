@@ -8,6 +8,7 @@ import SendOutFileButton from '../components/SendOutFileButton';
 import AuthContext from '../store/authContext';
 import {REACT_APP_URL} from "@env";
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { useIsFocused } from '@react-navigation/native';
 
 const Home = ({navigation}) => {
   const authCtx = useContext(AuthContext)
@@ -15,6 +16,7 @@ const Home = ({navigation}) => {
   const [snackbarVisibility, setSnackbarVisibility] = useState(false);
   const [recentFiles, setRecentFiles] = useState( null )
   const [isLoading, setIsLoading] = useState(false);
+  const isFocused = useIsFocused();
   const getRecentFiles = async() => {
     setIsLoading(true)
     try{
@@ -39,9 +41,8 @@ const Home = ({navigation}) => {
     setIsLoading(false)
   }
   useEffect( () => {
-    console.log("fetching files")
     getRecentFiles();
-  }, [authCtx.token])
+  }, [isFocused])
 
   return (
     <View style={styles.wraper}>
@@ -74,9 +75,6 @@ const Home = ({navigation}) => {
           recentFiles?.length ? <View>
               <View style={{flexDirection:'row', alignItems: 'center', marginTop: 10, justifyContent: 'space-between'}}>
                 <Text variant='titleSmall'>Recent Files</Text>
-                <Button loading={isLoading} onPress={()=> getRecentFiles()} textColor='crimson' >
-                  { !isLoading && <Ionicons name="reload" size={20} color="crimson" />}
-                </Button>
               </View>
               <List.Section style={styles.fileContainer}>
                 {
