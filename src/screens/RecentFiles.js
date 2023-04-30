@@ -13,7 +13,7 @@ const RecentFiles = ({navigation}) => {
     const getRecentFiles = async() => {
         setIsLoading(true)
         try{
-          const resp = await axios.get(`${REACT_APP_URL}/api/user/recent-files`, {
+          const resp = await axios.get(`${REACT_APP_URL}/api/user/getAllRecentFiles`, {
             headers:{
                 'content-type': 'application/json',
                 'Authorization': `Bearer ${authCtx.token}`
