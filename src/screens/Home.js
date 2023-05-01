@@ -7,7 +7,6 @@ import TakeInFileButton from '../components/TakeInFileButton';
 import SendOutFileButton from '../components/SendOutFileButton';
 import AuthContext from '../store/authContext';
 import {REACT_APP_URL} from "@env";
-import Ionicons from '@expo/vector-icons/Ionicons';
 import { useIsFocused } from '@react-navigation/native';
 
 const Home = ({navigation}) => {
@@ -42,7 +41,7 @@ const Home = ({navigation}) => {
   }
   useEffect( () => {
     getRecentFiles();
-  }, [isFocused])
+  }, [isFocused, authCtx.token])
 
   return (
     <View style={styles.wraper}>
