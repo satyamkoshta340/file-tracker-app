@@ -92,10 +92,10 @@ const File = ({route, navigation}) => {
                 keyExtractor={(item, index) => index}
                 renderItem= { ({item, index}) => {
                     return(
-                        <View style={{ marginBottom:6, borderWidth: 1 , backgroundColor: index%2 ? "BFC0C0" : "#DFE3DE", borderColor: "grey"}}>
-                            <Text style={{borderBottomWidth: 1, paddingLeft: 5, paddingRight: 5, paddingBottom: 2, borderColor: "grey"}}>{item.userId.firstName + " " + item.userId.lastName}</Text>
-                            { item.info && <Text style={{borderBottomWidth: 1, paddingLeft: 5, paddingRight: 5, borderColor: "grey"}}>{item.info}</Text> }
-                            <Text style={{ paddingLeft: 5, paddingRight: 5, borderColor: "grey"}}>{item.reachedAt}</Text>
+                        <View style={{ marginBottom:6, borderWidth: 1 , backgroundColor: index%2 ? "#A0AAB2" : "#C7CEDB", borderColor: "grey"}}>
+                            <Text style={{borderBottomWidth: 1, paddingLeft: 5, paddingRight: 5, paddingBottom: 2, borderColor: "grey", color: 'black'}}>{item.userId.firstName + " " + item.userId.lastName}</Text>
+                            { item.info && <Text style={{borderBottomWidth: 1, paddingLeft: 5, paddingRight: 5, borderColor: "grey",  color: 'black'}}>{item.info}</Text> }
+                            <Text style={{ paddingLeft: 5, paddingRight: 5, borderColor: "grey", color: 'black'}}>{item.reachedAt}</Text>
                         </View>
                 )} }
             />
@@ -109,6 +109,7 @@ export default File
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        padding:20
+        padding:20,
+        backgroundColor: '#dee4f7'
     },
 })

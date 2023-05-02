@@ -16,7 +16,7 @@ export default function App() {
       <AuthContextProvider>
         <MainStack/>
         <Toast />
-        <StatusBar style="auto" backgroundColor='white'/>
+        <StatusBar style="auto" />
       </AuthContextProvider>
     </NavigationContainer>
   );

@@ -1,7 +1,7 @@
 import { StyleSheet, View, Pressable, Image } from 'react-native'
 import React, { useState, useContext } from 'react'
 import AuthContext from '../store/authContext';
-import { Modal, Portal, Button, Text } from 'react-native-paper';
+import { Modal, Portal, Button, Text, useTheme } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { Zocial } from '@expo/vector-icons';
@@ -10,17 +10,10 @@ import { MaterialIcons } from '@expo/vector-icons';
 const Account = ({navigation}) => {
     const [modalVisibility, setModalVisibility] = useState(false);
     const authCtx = useContext(AuthContext);
+    const theme = useTheme();
 
     return (
-    <View style={styles.wrapper}>
-        {/* <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingBottom: 10}}>
-            <Pressable style={ styles.backButton}>
-                <Text style={styles.backButtonText}>←</Text>
-            </Pressable>
-            <Text style={{fontSize: 22, fontWeight:900}}>
-                account
-            </Text>
-        </View> */}
+    <View style={[styles.wrapper]}>
         <View style={{alignItems: "center"}}>
             {
                 authCtx?.profile ? 
@@ -40,13 +33,13 @@ const Account = ({navigation}) => {
 
         <Pressable style={ styles.cardRow } onPress={() => navigation.navigate("RecentFiles")}>
             <Entypo name="folder" size={24} color="#DBC743" />
-            <Text style={{marginLeft: 5}}>All Recent Files</Text>
+            <Text style={{marginLeft: 5, color: 'white'}}>All Recent Files</Text>
         </Pressable>
 
         <Pressable onPress={() => { setModalVisibility(true)
         }} style={ styles.cardRow }>
-            <MaterialCommunityIcons name="logout" size={24} color="black" />
-            <Text style={{marginLeft: 5}}>Log out</Text>
+            <MaterialCommunityIcons name="logout" size={24} color="white" />
+            <Text style={{marginLeft: 5, color: 'white'}}>Log out</Text>
         </Pressable>
 
         <Portal>
@@ -71,27 +64,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#dee4f7',
         padding: 20,
     },
-    backButton:{
-        position: 'absolute',
-        left: 0,
-        backgroundColor: '#ffff',
-        width: 40,
-        height: 40,
-        borderRadius: 50,
-        alignItems: 'center',
-        justifyContent: "center"
-    },
-    backButtonText:{
-        fontSize: 20,
-        fontWeight: 700
-    },
     cardRow: {
         flexDirection: 'row',
         marginTop: 20,
         height: 80,
         padding: 20,
         borderRadius: 10,
-        backgroundColor: 'white',
+        backgroundColor: '#39304A',
         alignItems: 'center'
     },
     userBox:{

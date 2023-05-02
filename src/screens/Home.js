@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     wraper:{
         flex: 1,
         padding: 20,
-        backgroundColor: '#efe8f6'
+        backgroundColor: '#E6D8F3'
     },
     row:{
         flexDirection: 'row',
@@ -120,7 +120,8 @@ const styles = StyleSheet.create({
     },
     cardText:{
         fontSize: 16,
-        fontWeight: 700
+        fontWeight: 700,
+        color: 'black'
     },
     rowCard: {
       width: "100%",

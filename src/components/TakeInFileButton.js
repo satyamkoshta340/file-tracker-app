@@ -210,7 +210,8 @@ const styles = StyleSheet.create({
     },
     cardText:{
         fontSize: 16,
-        fontWeight: 700
+        fontWeight: 700,
+        color: 'black'
     },
     row:{
         paddingTop: 20,

@@ -49,8 +49,8 @@ const RecentFiles = ({navigation}) => {
                 <List.Section style={styles.fileContainer}>
                     {
                         recentFiles?.map( (item, key) => <Card type='elevated' style={styles.file} onPress={() => navigation.navigate("File", { fileId: item._id})} key={key}>
-                                <Text variant="titleMedium" ellipsizeMode='tail' > <FontAwesome name="file" size={16} color="#00072D" /> {item?.fileName}</Text>
-                                <Text ellipsizeMode='tail' numberOfLines={2}>{item.description}</Text>
+                                <Text variant="titleMedium" ellipsizeMode='tail' style={{color:"#00072D"}}> <FontAwesome name="file" size={16} color="#00072D" /> {item?.fileName}</Text>
+                                <Text ellipsizeMode='tail' numberOfLines={2} style={{color:"#00072D"}}>{item.description}</Text>
                             </Card>)
                     }
                     {

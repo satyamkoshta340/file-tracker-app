@@ -74,8 +74,8 @@ const ExistingFiles = ({navigation}) => {
                     setFile(item)
                     Vibration.vibrate(50);
                     setModalVisibility(true)}}>
-                        <Text variant="titleMedium" ellipsizeMode='tail' > <FontAwesome name="file" size={16} color="#BFAB25" /> {item?.fileName}</Text>
-                        <Text ellipsizeMode='tail' numberOfLines={2}>{item.description}</Text>
+                        <Text variant="titleMedium" ellipsizeMode='tail' style={{color: '#2C0703'}}> <FontAwesome name="file" size={16} color="#2C0703" /> {item?.fileName}</Text>
+                        <Text ellipsizeMode='tail' numberOfLines={2} style={{color: '#2C0703'}}>{item.description}</Text>
                     </Card>)
             }
             { files?.length%3 ? <View style={{ flexGrow: 0.75}}></View> : '' }
