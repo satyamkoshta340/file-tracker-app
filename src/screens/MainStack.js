@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image } from 'react-native'
-import React, {useState, useEffect, useContext} from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import DefaultScreen from './DefaultScreen';
 import AuthContext from '../store/authContext';
@@ -12,6 +12,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import ExistingFiles from './ExistingFiles';
 import { Provider as PaperProvider, MD3LightTheme as DefaultTheme, } from 'react-native-paper';
 import { useNetInfo } from "@react-native-community/netinfo";
+import { REACT_APP_URL } from "@env";
+import axios from 'axios';
 
 const Stack = createNativeStackNavigator();
 const myTheme = {
@@ -59,26 +61,38 @@ const myTheme = {
     backdrop: "rgba(55, 46, 52, 0.4)",
   },
 };
-const MainStack = () => {
-    const [ token, setToken ] = useState( null )
-    const authCtx = useContext(AuthContext);
-    const netinfo = useNetInfo();
+const MainStack = ({ expoPushToken }) => {
+  const [token, setToken] = useState(null)
+  const authCtx = useContext(AuthContext);
+  const netinfo = useNetInfo();
 
-    const sync = async () =>{
-        try {
-        await AsyncStorage.getItem("token").then((data) => {
-            setToken(data)
-        });
+  const sync = async () => {
+    try {
+      await AsyncStorage.getItem("token").then((data) => {
+        setToken(data)
+      });
 
-          await new Promise((resolve) => setTimeout(resolve, 1000));
-        } catch {
-        (e) => console.warn(e);
-        }
+      if (authCtx.token) {
+        // console.log("here", expoPushToken)
+        const resp = await axios.put(`${REACT_APP_URL}/api/user`, { expoPushToken: expoPushToken }, {
+          headers: {
+            'content-type': 'application/json',
+            'Authorization': `Bearer ${authCtx.token}`
+          }
+        })
+        const response = resp.data;
+        // console.log(response);
+      }
+      // console.log("syncing...")
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    } catch {
+      (e) => console.warn(e);
     }
+  }
 
-  useEffect( ()=>{
+  useEffect(() => {
     sync();
-  }, [authCtx.token])
+  }, [authCtx])
 
   if (!netinfo.isConnected) {
     return (
@@ -93,25 +107,24 @@ const MainStack = () => {
 
   return (
     <PaperProvider theme={myTheme}>
-    <View style={styles.container}>
-        { !token ? <DefaultScreen/> :
-        // <Home />
+      <View style={styles.container}>
+        {!token ? <DefaultScreen /> :
           <Stack.Navigator>
-            <Stack.Screen name="Home" component={Home} 
+            <Stack.Screen name="Home" component={Home}
               options={({ navigation }) => ({
                 headerTitle: "Lets Track",
                 headerRight: () => (
-                  <AvatarButton navigation={navigation}/>
+                  <AvatarButton navigation={navigation} />
                 ),
               })}
             />
-            <Stack.Screen name="Account" component={Account}/>
+            <Stack.Screen name="Account" component={Account} />
             <Stack.Screen name="ExistingFiles" component={ExistingFiles} />
-            <Stack.Screen name="File" component={File}/>
-            <Stack.Screen name="RecentFiles" component={RecentFiles}/>
+            <Stack.Screen name="File" component={File} />
+            <Stack.Screen name="RecentFiles" component={RecentFiles} />
           </Stack.Navigator>
         }
-    </View>
+      </View>
     </PaperProvider>
   )
 }
@@ -119,8 +132,8 @@ const MainStack = () => {
 export default MainStack
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-      },
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
 })

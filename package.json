@@ -19,6 +19,8 @@
     "expo-auth-session": "~4.0.3",
     "expo-barcode-scanner": "^12.3.2",
     "expo-crypto": "~12.2.1",
+    "expo-device": "^5.2.1",
+    "expo-notifications": "^0.18.1",
     "expo-print": "^12.2.1",
     "expo-sharing": "^11.2.2",
     "expo-splash-screen": "~0.18.2",

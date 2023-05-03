@@ -18,3 +18,4 @@ web-build/
 package-lock.json
 eas.json
 .env
+google-services.json
