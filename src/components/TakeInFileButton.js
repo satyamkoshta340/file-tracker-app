@@ -5,6 +5,7 @@ import { Modal, Portal, Button, Text, ActivityIndicator } from 'react-native-pap
 import { REACT_APP_URL } from "@env";
 import axios from 'axios';
 import AuthContext from '../store/authContext';
+import Alert from './Alert';
 
 const deviceHeight = Dimensions.get('screen').height;
 
@@ -16,14 +17,21 @@ const TakeInFileButton = ({navigation, setSnackbarVisibility, setSnackbarText}) 
     const [scanResult, setScanResult] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
-    useEffect(() => {
-        const getBarCodeScannerPermissions = async () => {
+    const getBarCodeScannerPermissions = async () => {
         const { status } = await BarCodeScanner.requestPermissionsAsync();
         setHasPermission(status === 'granted');
-        };
-
-        getBarCodeScannerPermissions();
-    }, []);
+        if( status === 'denied' ){
+            Alert("error", "Camera Access Required", "Please allow to use camera.")
+        }
+    };
+    const openScanner = async () =>{
+        if( !hasPermission ){
+            getBarCodeScannerPermissions();
+        }
+        else{
+            setScannerVisibility(true);
+        }
+    }
 
     const handleBarCodeScanned = ({ type, data }) => {
         setScanned(true);
@@ -31,12 +39,12 @@ const TakeInFileButton = ({navigation, setSnackbarVisibility, setSnackbarText}) 
         checkResult(data);
     };
 
-    if (hasPermission === null) {
-        return <Text>Requesting for camera permission</Text>;
-    }
-    if (hasPermission === false) {
-        return <Text>No access to camera</Text>;
-    }
+    // if (hasPermission === null) {
+    //     return <Text>Requesting for camera permission</Text>;
+    // }
+    // if (hasPermission === false) {
+    //     return <Text>No access to camera</Text>;
+    // }
 
 
     // function to take file in
@@ -111,7 +119,7 @@ const TakeInFileButton = ({navigation, setSnackbarVisibility, setSnackbarText}) 
     return (
         <View style={{paddingTop: 20}}>
             <Button contentStyle={styles.card}
-                onPress={() => setScannerVisibility(true)}
+                onPress={() => openScanner()}
                 textColor='black'
                 >
                     <Text style={styles.cardText}> Take In File </Text>

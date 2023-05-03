@@ -8,7 +8,7 @@ const DefaultScreen = () => {
 
     return (
       <View style={styles.container}>
-          <Text style={styles.title}>Lets Track</Text>
+          <Text style={styles.title}>Let's Track</Text>
           <Image source={require('../../assets/background1.png')} style={{ width: 320, height: 200, marginBottom: 50}} />
           <Pressable style={({ pressed }) => [
           pressed && {
