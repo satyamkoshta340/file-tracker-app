@@ -79,7 +79,9 @@ const TakeInFileButton = ({navigation, setSnackbarVisibility, setSnackbarText}) 
     const checkResult = async (res) => {
         setIsLoading(true)
         try{
-            const resp = await axios.get(`${REACT_APP_URL}/api/file/${res}`, {
+            const pos = res.search("/track/");
+            const fileId = res.substring(pos+7);
+            const resp = await axios.get(`${REACT_APP_URL}/api/file/${fileId}`, {
                 method: 'GET',
                 headers:{
                     'content-type': 'application/json',
